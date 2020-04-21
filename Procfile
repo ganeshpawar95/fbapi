@@ -1,1 +1,1 @@
-web: gununicorn fbapi.wsgi --log-file -
+web: gunicorn fbapi.wsgi --log-file -
