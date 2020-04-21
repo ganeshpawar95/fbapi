@@ -129,3 +129,4 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media/')
 
+CORS_ORIGIN_WHITELIST = '*'
