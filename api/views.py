@@ -13,7 +13,7 @@ from .models import Post
 from .serializers import PostSerializer
 from django.http import JsonResponse
 import json
-
+from array import array
 
 # Create your views here.
 def removebg(request):
@@ -34,4 +34,11 @@ def removebg(request):
 	add=AdAccount(id).get_campaigns(
 	  fields=fields,
 	  params=params)
-	return HttpResponse(add)
+	data1=[]
+	for i in add:
+		data={
+		'id':i['id'],
+		'name':i['name']
+		}
+		data1.append(data)
+	return JsonResponse(data1,safe=False)
