@@ -15,30 +15,37 @@ from django.http import JsonResponse
 import json
 from array import array
 
-# Create your views here.
-def removebg(request):
-	adds=[]
-	access_token = 'EAADv7hN46IABACK043D7oPKJPKAZBK92bRxZAbesb0FRzPX1BFRIgJ7zv2IFo6sH0hI8O1ZA8bha1yZCZAPvLy6biKkF9NwII1gZAZCXsT9BKPBzcPYAspiNvu6zxX6iJDBX6jJR87mYZCjZA5ZAgf5MDKTpEnKFO7cywmBXEjyZBSudJBJ4mNSNAQe0fUY9CinfMgZD'
-	app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
-	app_id = '263805807945856'
-	id = 'act_2770121319724389'
-	FacebookAdsApi.init(access_token=access_token)
 
-	fields = [
-	  'name',
-	  'objective',
-	]
-	params = {
-	  'effective_status': ['ACTIVE','PAUSED'],
-	}
-	add=AdAccount(id).get_campaigns(
-	  fields=fields,
-	  params=params)
-	data1=[]
-	for i in add:
-		data={
-		'id':i['id'],
-		'name':i['name']
+def removebg(request):
+	if request.method=='POST':
+		access_token=request.GET.get('access_token')
+		print(access_token)
+		adds=[]
+		access_token = access_token
+		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
+		app_id = '263805807945856'
+		id = 'act_2770121319724389'
+		FacebookAdsApi.init(access_token=access_token)
+
+		fields = [
+		  'name',
+		  'objective',
+		]
+		params = {
+		  'effective_status': ['ACTIVE','PAUSED'],
 		}
-		data1.append(data)
-	return JsonResponse(data1,safe=False)
+		add=AdAccount(id).get_campaigns(
+		  fields=fields,
+		  params=params)
+		data1=[]
+		for i in add:
+			data={
+			'id':i['id'],
+			'name':i['name']
+			}
+			data1.append(data)
+		print(data1)
+		
+		return JsonResponse(data1)
+	else:
+		return HttpResponse('not found')
