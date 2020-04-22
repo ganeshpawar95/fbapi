@@ -16,9 +16,14 @@ import json
 from array import array
 
 
+def campagin(request):
+	return render(request,'index.html')
+
+
+@api_view(['GET'])
 def removebg(request):
-	if request.method=='POST':
-		access_token=request.GET.get('access_token')
+	if request.method=='GET':
+		access_token=request.headers['token']
 		print(access_token)
 		adds=[]
 		access_token = access_token
