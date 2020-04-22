@@ -51,6 +51,6 @@ def removebg(request):
 			data1.append(data)
 		print(data1)
 		
-		return JsonResponse(data1)
+		return JsonResponse(data1, safe=False)
 	else:
 		return HttpResponse('not found')
