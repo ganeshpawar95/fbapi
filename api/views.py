@@ -60,11 +60,12 @@ def removebg(request):
 def getadset(request):
 	if request.method == 'GET':
 		access_token=request.headers['token']
+		campaignId = request.GET.get('campignId')
 
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
 		app_id = '263805807945856'
 		id = 'act_2770121319724389'
-		CAMPAIGN_ID='23844605998330207'
+		CAMPAIGN_ID = campaignId
 		access_token = access_token
 		FacebookAdsApi.init(access_token=access_token)
 		fields = [
@@ -99,11 +100,13 @@ def getadset(request):
 def create_adset(request):
 	if request.method == 'GET':
 		access_token=request.headers['token']
+		campaignId = request.GET.get('campignId')
+
 		access_token = access_token
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
 		app_id = '263805807945856'
 		id = 'act_2770121319724389'
-		CAMPAIGN_ID='23844605998330207'
+		CAMPAIGN_ID = campaignId
 		FacebookAdsApi.init(access_token=access_token)
 		fields = []
 		params = {
@@ -135,11 +138,16 @@ def update_ad_set(request):
 		app_id = '263805807945856'
 		ADSET_ID='23844754016890207'
 		FacebookAdsApi.init(access_token=access_token)
-		fields = []
+		# start_time='2020-5-4T13:13:36+0530'
+		end_time='2020-9-20T13:13:36+0530'
+		targeting={'geo_locations':{'countries':['IN']}}
+		fields = ['id','start_time','end_time','targeting']
 		params = {
-		'targeting': {'geo_locations':{'countries':['IN']},'facebook_positions':['feed']},
+		# 'start_time':start_time,
+		'end_time':end_time,
+		'targeting':targeting,
 		}
-		updateadset= AdSet(id).update(
+		updateadset= AdSet(ADSET_ID).api_update(
 			fields=fields,
 			params=params,
 			)
