@@ -151,7 +151,7 @@ def get_adset_by_id(request):
 
 @api_view(['POST'])
 def update_ad_set_date(request):
-	if request.method == 'POST':
+	if request.method == 'pOST':
 		access_token=request.headers['token']
 		received_json_data = json.loads(request.body)
 
@@ -160,11 +160,8 @@ def update_ad_set_date(request):
 		app_id = '263805807945856'
 		ADSET_ID = adsetId
 		FacebookAdsApi.init(access_token=access_token)
-		# start_time='2020-5-4T13:13:36+0530'
-		start_time=request.POST.get('start_time')
-		end_time=request.POST.get('end_time')
-		targeting={'geo_locations':{'countries':['IN']}}
-		fields = ['id','start_time','end_time','targeting']
+		
+		fields = ['start_time','end_time']
 		params = received_json_data
 		updateadset= AdSet(ADSET_ID).api_update(
 			fields=fields,
