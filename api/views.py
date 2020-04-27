@@ -166,8 +166,8 @@ def update_ad_set_date(request):
 		fields = ['end_time']
 		print(fields)
 
-		end_time= datetime.strptime(end_time, '%y/%m/%d %H:%M:%S')
-		print(end_time)
+		end_time= datetime.strptime(datetime_str)
+		print('>>>>>>',end_time)
 
 		params = {
 			'end_time':end_time
