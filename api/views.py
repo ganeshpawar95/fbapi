@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.shortcuts import render
+from facebook_business.adobjects.adset import AdSet
 from facebook_business.adobjects.adaccount import AdAccount
 from facebook_business.adobjects.campaign import Campaign
 from facebook_business.api import FacebookAdsApi
@@ -7,14 +8,14 @@ from django.views import View
 from django.http import HttpResponse
 from rest_framework import status
 
+from facebook_business.api import FacebookAdsApi
+
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Post
 from .serializers import PostSerializer
 from django.http import JsonResponse
 import json
-from array import array
-
 
 def campagin(request):
 	return render(request,'index.html')
