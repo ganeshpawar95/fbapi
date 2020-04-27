@@ -16,6 +16,7 @@ from .models import Post
 from .serializers import PostSerializer
 from django.http import JsonResponse
 import json
+from datetime import datetime
 
 def campagin(request):
 	return render(request,'index.html')
@@ -164,6 +165,10 @@ def update_ad_set_date(request):
 
 		fields = ['end_time']
 		print(fields)
+
+		end_time= datetime.strptime(end_time, '%y/%m/%d %H:%M:%S')
+		print(end_time)
+
 		params = {
 			'end_time':end_time
 		}
