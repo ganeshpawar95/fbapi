@@ -13,9 +13,9 @@ urlpatterns = [
     path('create_adset/',create_adset,name='create_adset'),
 
     path('get_adset_by_id/',get_adset_by_id,name='get_adset_by_id'),
-    
-    path('update_ad_set_date/',update_ad_set_date,name='update_ad_set_date'),
-    path('update_ad_set_targeting/',update_ad_set_targeting,name='update_ad_set_targeting'),
+
+    path('update_ad_set_date',update_ad_set_date,name='update_ad_set_date'),
+    path('update_ad_set_targeting',update_ad_set_targeting,name='update_ad_set_targeting'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

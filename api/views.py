@@ -153,6 +153,7 @@ def get_adset_by_id(request):
 def update_ad_set_date(request):
 	if request.method == 'POST':
 		access_token=request.headers['token']
+		received_json_data = json.loads(request.body)
 
 		adsetId = request.POST.get('adsetId')
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
@@ -164,10 +165,7 @@ def update_ad_set_date(request):
 		end_time=request.POST.get('end_time')
 		targeting={'geo_locations':{'countries':['IN']}}
 		fields = ['id','start_time','end_time','targeting']
-		params = {
-			'start_time':start_time,
-			'end_time':end_time,
-		}
+		params = received_json_data
 		updateadset= AdSet(ADSET_ID).api_update(
 			fields=fields,
 			params=params,
@@ -182,6 +180,7 @@ def update_ad_set_date(request):
 def update_ad_set_targeting(request):
 	if request.method == 'POST':
 		access_token=request.headers['token']
+		received_json_data = json.loads(request.body)
 
 		adsetId = request.POST.get('adsetId')
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
@@ -190,9 +189,7 @@ def update_ad_set_targeting(request):
 		FacebookAdsApi.init(access_token=access_token)
 		targeting=request.POST.get('targeting')
 		fields = ['id','start_time','end_time','targeting']
-		params = {
-		'targeting':targeting,
-		}
+		params = received_json_data
 		updateadset= AdSet(ADSET_ID).api_update(
 			fields=fields,
 			params=params,
