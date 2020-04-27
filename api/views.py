@@ -159,7 +159,7 @@ def update_ad_set_date(request):
 		app_id = '263805807945856'
 		ADSET_ID=adsetId
 		FacebookAdsApi.init(access_token=access_token)
-		end_time=request.Get.get('end_time')
+		end_time=request.GET.get('end_time')
 		print(end_time)
 
 		fields = ['end_time']
