@@ -161,10 +161,12 @@ def update_ad_set(request):
 def get_adset_by_id(request):
 	if request.method == 'GET':
 		access_token=request.headers['token']
+
+		adsetId = request.GET.get('adsetId')
 		access_token = access_token
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
 		app_id = '263805807945856'
-		ADSET_ID='23844754016890207'
+		ADSET_ID = adsetId
 		FacebookAdsApi.init(access_token=access_token)
 		fields = ['id','start_time','end_time','targeting']
 		params = {}
