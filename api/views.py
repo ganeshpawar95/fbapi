@@ -151,7 +151,7 @@ def get_adset_by_id(request):
 
 @api_view(['POST'])
 def update_ad_set_date(request):
-	if request.method == 'pOST':
+	if request.method == 'POST':
 		access_token=request.headers['token']
 		received_json_data = json.loads(request.body)
 
