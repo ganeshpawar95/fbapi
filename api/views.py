@@ -169,7 +169,7 @@ def get_adset_by_id(request):
 		app_id = '263805807945856'
 		ADSET_ID = adsetId
 		FacebookAdsApi.init(access_token=access_token)
-		fields = ['id','start_time','end_time','targeting']
+		fields = ['name','start_time','end_time','targeting']
 		params = {}
 		ad_set = AdSet(ADSET_ID).api_get(
                 fields=fields,
