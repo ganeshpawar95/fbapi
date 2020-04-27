@@ -161,10 +161,9 @@ def update_ad_set_date(request):
 		ADSET_ID = adsetId
 		FacebookAdsApi.init(access_token=access_token)
 		
-		fields = ['start_time','end_time']
 		params = received_json_data
+		print(params)
 		updateadset= AdSet(ADSET_ID).api_update(
-			fields=fields,
 			params=params,
 			)
 		print(updateadset)
