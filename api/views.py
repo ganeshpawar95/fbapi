@@ -27,7 +27,6 @@ def removebg(request):
 		access_token=request.headers['token']
 		print(access_token)
 		adds=[]
-		access_token = access_token
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
 		app_id = '263805807945856'
 		id = 'act_2770121319724389'
@@ -67,7 +66,6 @@ def getadset(request):
 		app_id = '263805807945856'
 		id = 'act_2770121319724389'
 		CAMPAIGN_ID = campaignId
-		access_token = access_token
 		FacebookAdsApi.init(access_token=access_token)
 		fields = [
 	    'name',
@@ -103,7 +101,6 @@ def create_adset(request):
 		access_token=request.headers['token']
 		campaignId = request.GET.get('campignId')
 
-		access_token = access_token
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
 		app_id = '263805807945856'
 		id = 'act_2770121319724389'
@@ -136,7 +133,6 @@ def get_adset_by_id(request):
 		access_token=request.headers['token']
 
 		adsetId = request.GET.get('adsetId')
-		access_token = access_token
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
 		app_id = '263805807945856'
 		ADSET_ID = adsetId
@@ -153,20 +149,19 @@ def get_adset_by_id(request):
 		return HttpResponse('not found')
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def update_ad_set_date(request):
-	if request.method == 'GET':
+	if request.method == 'POST':
 		access_token=request.headers['token']
 
-		adsetId = request.GET.get('adsetId')
-		access_token = access_token
+		adsetId = request.POST.get('adsetId')
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
 		app_id = '263805807945856'
 		ADSET_ID = adsetId
 		FacebookAdsApi.init(access_token=access_token)
 		# start_time='2020-5-4T13:13:36+0530'
-		start_time=request.GET.get('start_time')
-		end_time=request.GET.get('end_time')
+		start_time=request.POST.get('start_time')
+		end_time=request.POST.get('end_time')
 		targeting={'geo_locations':{'countries':['IN']}}
 		fields = ['id','start_time','end_time','targeting']
 		params = {
@@ -183,18 +178,17 @@ def update_ad_set_date(request):
 		return HttpResponse('not found')
 
 
-@api_view(['GET','POST'])
+@api_view(['POST'])
 def update_ad_set_targeting(request):
-	if request.method == 'GET':
+	if request.method == 'POST':
 		access_token=request.headers['token']
 
-		adsetId = request.GET.get('adsetId')
-		access_token = access_token
+		adsetId = request.POST.get('adsetId')
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
 		app_id = '263805807945856'
 		ADSET_ID = adsetId
 		FacebookAdsApi.init(access_token=access_token)
-		targeting=request.GET.get('targeting')
+		targeting=request.POST.get('targeting')
 		fields = ['id','start_time','end_time','targeting']
 		params = {
 		'targeting':targeting,
