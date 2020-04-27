@@ -157,10 +157,12 @@ def get_adset_by_id(request):
 def update_ad_set_date(request):
 	if request.method == 'GET':
 		access_token=request.headers['token']
+
+		adsetId = request.GET.get('adsetId')
 		access_token = access_token
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
 		app_id = '263805807945856'
-		ADSET_ID='23844754016890207'
+		ADSET_ID = adsetId
 		FacebookAdsApi.init(access_token=access_token)
 		# start_time='2020-5-4T13:13:36+0530'
 		start_time=request.GET.get('start_time')
@@ -185,10 +187,12 @@ def update_ad_set_date(request):
 def update_ad_set_targeting(request):
 	if request.method == 'GET':
 		access_token=request.headers['token']
+
+		adsetId = request.GET.get('adsetId')
 		access_token = access_token
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
 		app_id = '263805807945856'
-		ADSET_ID='23844754016890207'
+		ADSET_ID = adsetId
 		FacebookAdsApi.init(access_token=access_token)
 		targeting=request.GET.get('targeting')
 		fields = ['id','start_time','end_time','targeting']
