@@ -175,10 +175,10 @@ def update_ad_set_date(request):
 				fields=fields,
 				params=params,
 				)
-			print(updateadset)
-			return Response(updateadset)
-		else:
-			return HttpResponse('not found')
+		print(updateadset)
+		return Response(updateadset)
+	else:
+		return HttpResponse('not found')
 
 
 @api_view(['POST'])
