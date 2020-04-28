@@ -152,35 +152,33 @@ def get_adset_by_id(request):
 
 @api_view(['GET'])
 def update_ad_set_date(request):
-	if request.method == 'GET':
+	if request.method == 'POST':
+		print('----------------------------------')
 		access_token=request.headers['token']
-
+		
+		received_json_data = json.loads(request.body)
+		endDate = received_json_data['end_time']
+		startDate = received_json_data['start_time']
+		print('-----------' + endDate)
 		adsetId = request.GET.get('adsetId')
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
 		app_id = '263805807945856'
-		ADSET_ID=adsetId
+		ADSET_ID = adsetId
 		FacebookAdsApi.init(access_token=access_token)
-		end_time=request.GET.get('end_time')
-		print(end_time)
-
 		fields = ['end_time']
 		print(fields)
-
-		end_time= datetime.strptime(end_time,YYYY-MM-DD )
-		print('>>>>>>',end_time)
-
 		params = {
-			'end_time':end_time
+			'start_time':startDate,
+			'end_time':endDate,
 		}
-		print(params)
 		updateadset= AdSet(ADSET_ID).api_update(
-			fields=fields,
-			params=params,
-			)
-		print(updateadset)
-		return Response(updateadset)
-	else:
-		return HttpResponse('not found')
+				fields=fields,
+				params=params,
+				)
+			print(updateadset)
+			return Response(updateadset)
+		else:
+			return HttpResponse('not found')
 
 
 @api_view(['POST'])
