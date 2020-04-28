@@ -186,9 +186,10 @@ def update_ad_set_targeting(request):
 	if request.method == 'POST':
 		print('----------------------------------')
 		access_token=request.headers['token']
-
 		received_json_data = json.loads(request.body)
-		
+		latitude = received_json_data['lati']
+		longitude = received_json_data['long']
+		print('-----------' + latitude)
 		adsetId = request.GET.get('adsetId')
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
 		app_id = '263805807945856'
@@ -197,7 +198,12 @@ def update_ad_set_targeting(request):
 		fields = ['targeting']
 		print(fields)
 		params = {
-			'targeting':received_json_data,
+		'targeting': {'geo_locations':{'custom_locations':[  
+          {  
+            "radius":30,
+            "latitude":latitude,
+            "longitude":longitude
+         }]},},
 		}
 		updateadset= AdSet(ADSET_ID).api_update(
 				fields=fields,
