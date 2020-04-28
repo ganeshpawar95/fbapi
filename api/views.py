@@ -150,7 +150,7 @@ def get_adset_by_id(request):
 		return HttpResponse('not found')
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def update_ad_set_date(request):
 	if request.method == 'POST':
 		print('----------------------------------')
