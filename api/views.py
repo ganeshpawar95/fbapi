@@ -184,22 +184,27 @@ def update_ad_set_date(request):
 @api_view(['POST'])
 def update_ad_set_targeting(request):
 	if request.method == 'POST':
+		print('----------------------------------')
 		access_token=request.headers['token']
-		received_json_data = json.loads(request.body)
 
-		adsetId = request.POST.get('adsetId')
+		received_json_data = json.loads(request.body)
+		targeting = received_json_data['targeting']
+		print('-----------' + endDate)
+		adsetId = request.GET.get('adsetId')
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
 		app_id = '263805807945856'
 		ADSET_ID = adsetId
 		FacebookAdsApi.init(access_token=access_token)
-		targeting=request.POST.get('targeting')
-		fields = ['id','start_time','end_time','targeting']
-		params = received_json_data
+		fields = ['targeting']
+		print(fields)
+		params = {
+			'targeting':targeting,
+		}
 		updateadset= AdSet(ADSET_ID).api_update(
-			fields=fields,
-			params=params,
-			)
-		print(updateadset)
+				fields=fields,
+				params=params,
+				)
+			print(updateadset)
 		return Response(updateadset)
 	else:
 		return HttpResponse('not found')
