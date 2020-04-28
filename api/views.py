@@ -204,7 +204,7 @@ def update_ad_set_targeting(request):
 				fields=fields,
 				params=params,
 				)
-			print(updateadset)
+		print(updateadset)
 		return Response(updateadset)
 	else:
 		return HttpResponse('not found')
