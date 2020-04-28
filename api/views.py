@@ -188,8 +188,7 @@ def update_ad_set_targeting(request):
 		access_token=request.headers['token']
 
 		received_json_data = json.loads(request.body)
-		targeting = received_json_data['targeting']
-		print('-----------' + endDate)
+		
 		adsetId = request.GET.get('adsetId')
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
 		app_id = '263805807945856'
@@ -198,7 +197,7 @@ def update_ad_set_targeting(request):
 		fields = ['targeting']
 		print(fields)
 		params = {
-			'targeting':targeting,
+			'targeting':received_json_data,
 		}
 		updateadset= AdSet(ADSET_ID).api_update(
 				fields=fields,
@@ -208,3 +207,5 @@ def update_ad_set_targeting(request):
 		return Response(updateadset)
 	else:
 		return HttpResponse('not found')
+
+
