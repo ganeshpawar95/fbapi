@@ -188,7 +188,11 @@ def update_ad_set_targeting(request):
 		access_token=request.headers['token']
 		received_json_data = json.loads(request.body)
 		latitude = received_json_data['lati']
+		latitude = float(latitude)
+		print(latitude)
 		longitude = received_json_data['long']
+		longitude = float(longitude)
+		print(longitude)
 		print('-----------' + latitude)
 		adsetId = request.GET.get('adsetId')
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
