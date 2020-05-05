@@ -11,7 +11,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     class Meta:
         model = User
-        fields = ("id", "username","last_name", "email", "password")
+        fields = ("id", "username","first_name","last_name", "password")
 
     def validate(self, attrs):
         attrs['password'] = make_password(attrs['password'])
