@@ -7,6 +7,11 @@ import json
 
 urlpatterns = [
     path('campagin',campagin,name='campagin'),
+
+	path('users/', UserRegistrationAPIView.as_view(), name="list"),
+    path('users/login/', UserLoginAPIView.as_view(), name="login"),
+    path('tokens/<key>/', UserTokenAPIView.as_view(), name="token"),
+
     path('get_campagin/',removebg,name='getcampagin'),
 
     path('get_ad_set/',getadset,name='getadset'),
