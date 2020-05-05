@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import dj_database_url
 from corsheaders.defaults import default_headers
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -93,10 +94,14 @@ DATABASES = {
         'NAME': 'admin_db',
         'USER': 'admin',
         'PASSWORD': 'admin@123',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
+
+
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 
 
 REST_FRAMEWORK = {
