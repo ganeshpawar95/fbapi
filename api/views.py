@@ -19,7 +19,9 @@ from .models import Post
 from .serializers import UserRegistrationSerializer, UserLoginSerializer, TokenSerializer
 from django.http import JsonResponse
 import json
-from datetime import datetime
+# from datetime import datetime
+from datetime import date
+import dateutil.parser as parser
 
 def campagin(request):
 	return render(request,'index.html')
@@ -148,6 +150,18 @@ def getadset(request):
 	    	)
 		print(ads)
 		for i in ads:
+			ids=i['id']
+			name=i['name']
+			start_time=i['start_time']
+			end_time=i['end_time']
+			targeting=i['targeting']
+			try:
+				scrapped_url = Adset.objects.get(id=ids)
+				
+			except Adset.DoesNotExist:
+				scrapped_url = Adset.objects.create(id=ids,name=name,start_time=start_time,end_time=end_time
+				,targeting=targeting)
+
 			data={
 			'id':i['id'],
 			'name':i['name'],
@@ -156,7 +170,28 @@ def getadset(request):
 			'targeting':i['targeting'],
 			}
 			data1.append(data)
-		print(data1)
+
+		today = date.today()
+		for i in data1:
+			idss=i['id']
+			end_time=i['end_time']
+			date1 = (parser.parse(end_time))
+			endate=date1.date()
+			if endate <= today:
+				adsts=Adset.objects.filter(id=idss)
+				for adsss in adsts:
+					targsts=adsss.targeting
+					fields = ['targeting','start_time','end_time']
+					params = {
+					'targeting':targsts,
+					}
+					updateadset= AdSet(idss).api_update(
+					fields=fields,
+					params=params,
+					)
+					print('update ad set',updateadset)
+			else:
+				print('date is greter then today date')		
 		return Response(data1)
 	else:
 		return HttpResponse('not found')
