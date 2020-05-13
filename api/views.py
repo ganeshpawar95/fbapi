@@ -317,7 +317,7 @@ def update_ad_set_data(request):
 		startDate = received_json_data['start_time']
 		print('-----------' + endDate)
 
-		latitude = received_json_data['lati']
+		latitude = received_json_data.location['lati']
 		latitude = float(latitude)
 		print(latitude)
 
@@ -355,6 +355,7 @@ def update_ad_set_data(request):
 	            "longitude":longitude
 	        }]},},
 		}
+
 		updateadset= AdSet(ADSET_ID).api_update(
 				fields=fields,
 				params=params,
