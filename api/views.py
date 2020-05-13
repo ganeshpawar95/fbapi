@@ -326,7 +326,8 @@ def update_ad_set_data(request):
 		longitude = float(longitude)
 		print(longitude)
 		
-		adsetId = request.GET.get(int('adsetId'))
+		adsetIds = request.GET.get('adsetId')
+		adsetId=int(adsetIds)
 		print(adsetId)
 		targetings={'targeting': {'geo_locations':{'custom_locations':[  
 	        	{  
