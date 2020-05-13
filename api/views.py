@@ -306,6 +306,7 @@ def update_ad_set_targeting(request):
 	else:
 		return HttpResponse('not found')
 
+
 @api_view(['POST'])
 def update_ad_set_data(request):
 	if request.method == 'POST':
@@ -324,8 +325,9 @@ def update_ad_set_data(request):
 		longitude = received_json_data['location']['long']
 		longitude = float(longitude)
 		print(longitude)
-
-		adsetId = request.GET.get('adsetId')
+		
+		adsetId = request.GET.get(int('adsetId'))
+		print(adsetId)
 		targetings={'targeting': {'geo_locations':{'custom_locations':[  
 	        	{  
 	            "radius":30,
@@ -335,9 +337,9 @@ def update_ad_set_data(request):
 	        }
 		try:
 			scrapped_url = Adset.objects.get(id=adsetId)
-			
 		except Adset.DoesNotExist:
-			scrapped_url = Adset.objects.create(id=adsetId,start_time=startDate,end_time=endDate,targeting=targetings)
+			scrapped_url = Adset.objects.create(id=adsetId,start_time=startDate,end_time=endDate
+			,targeting=targetings)
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
 		app_id = '263805807945856'
 		ADSET_ID = adsetId
