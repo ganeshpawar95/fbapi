@@ -21,6 +21,7 @@ urlpatterns = [
 
     path('update_ad_set_date',update_ad_set_date,name='update_ad_set_date'),
     path('update_ad_set_targeting',update_ad_set_targeting,name='update_ad_set_targeting'),
+    path('update_ad_set_data',update_ad_set_data,name='update_ad_set_data'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

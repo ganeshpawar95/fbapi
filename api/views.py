@@ -155,12 +155,6 @@ def getadset(request):
 			start_time=i['start_time']
 			end_time=i['end_time']
 			targeting=i['targeting']
-			try:
-				scrapped_url = Adset.objects.get(id=ids)
-				
-			except Adset.DoesNotExist:
-				scrapped_url = Adset.objects.create(id=ids,name=name,start_time=start_time,end_time=end_time
-				,targeting=targeting)
 
 			data={
 			'id':i['id'],
@@ -318,4 +312,60 @@ def update_ad_set_targeting(request):
 	else:
 		return HttpResponse('not found')
 
+@api_view(['POST'])
+def update_ad_set_data(request):
+	if request.method == 'POST':
+		print('----------------------------------')
+		access_token=request.headers['token']
+		received_json_data = json.loads(request.body)
 
+		endDate = received_json_data['end_time']
+		startDate = received_json_data['start_time']
+		print('-----------' + endDate)
+
+		latitude = received_json_data['lati']
+		latitude = float(latitude)
+		print(latitude)
+
+		longitude = received_json_data['long']
+		longitude = float(longitude)
+		print(longitude)
+
+		adsetId = request.GET.get('adsetId')
+		targetings={'targeting': {'geo_locations':{'custom_locations':[  
+	        	{  
+	            "radius":30,
+	            "latitude":latitude,
+	            "longitude":longitude
+	        }]},},
+	        }
+		try:
+			scrapped_url = Adset.objects.get(id=adsetId)
+			
+		except Adset.DoesNotExist:
+			scrapped_url = Adset.objects.create(id=adsetId,name=name,start_time=startDate,end_time=endDate
+			,targeting=targetings)
+		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
+		app_id = '263805807945856'
+		ADSET_ID = adsetId
+		FacebookAdsApi.init(access_token=access_token)
+		fields = ['start_time','end_time','targeting']
+		print(fields)
+		params = {
+			'start_time':startDate,
+			'end_time':endDate,
+			'targeting': {'geo_locations':{'custom_locations':[  
+	        	{  
+	            "radius":30,
+	            "latitude":latitude,
+	            "longitude":longitude
+	        }]},},
+		}
+		updateadset= AdSet(ADSET_ID).api_update(
+				fields=fields,
+				params=params,
+				)
+		print(updateadset)
+		return Response(updateadset)
+	else:
+		return HttpResponse('not found')
