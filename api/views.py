@@ -317,11 +317,11 @@ def update_ad_set_data(request):
 		startDate = received_json_data['start_time']
 		print('-----------' + endDate)
 
-		latitude = received_json_data.location['lati']
+		latitude = received_json_data['location']['lati']
 		latitude = float(latitude)
 		print(latitude)
 
-		longitude = received_json_data['long']
+		longitude = received_json_data['location']['long']
 		longitude = float(longitude)
 		print(longitude)
 
