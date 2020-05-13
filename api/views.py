@@ -15,7 +15,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.generics import CreateAPIView, GenericAPIView
 from rest_framework.response import Response
 from rest_framework.generics import RetrieveDestroyAPIView
-from .models import Post
+from .models import Post, Adset
 from .serializers import UserRegistrationSerializer, UserLoginSerializer, TokenSerializer
 from django.http import JsonResponse
 import json
@@ -150,12 +150,6 @@ def getadset(request):
 	    	)
 		print(ads)
 		for i in ads:
-			ids=i['id']
-			name=i['name']
-			start_time=i['start_time']
-			end_time=i['end_time']
-			targeting=i['targeting']
-
 			data={
 			'id':i['id'],
 			'name':i['name'],
