@@ -340,7 +340,7 @@ def update_ad_set_data(request):
 		try:
 			scrapped_url = Adset.objects.get(id=adsetId)
 			print('>>>>>>',scrapped_url)
-		except DoesNotExist:
+		except Adset.DoesNotExist:
 			scrapped_url = Adset.objects.create(id=adsetId,start_time=str(startDate),end_time=str(endDate)
 			,targeting=str(targetings))
 			print('<<<<<<<<<',scrapped_url)
