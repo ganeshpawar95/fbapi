@@ -313,6 +313,9 @@ def update_ad_set_data(request):
 		print('----------------------------------')
 		access_token=request.headers['token']
 		received_json_data = json.loads(request.body)
+		# received_json_data={"start_time":"2020-05-13T20:34:03.285+05:30","end_time":"2020-05-19T20:34:03.287+05:30","location":{"long":-84.3879824,"lati":33.7489954}}
+		# access_token='EAADv7hN46IABACK043D7oPKJPKAZBK92bRxZAbesb0FRzPX1BFRIgJ7zv2IFo6sH0hI8O1ZA8bha1yZCZAPvLy6biKkF9NwII1gZAZCXsT9BKPBzcPYAspiNvu6zxX6iJDBX6jJR87mYZCjZA5ZAgf5MDKTpEnKFO7cywmBXEjyZBSudJBJ4mNSNAQe0fUY9CinfMgZD'
+		
 
 		endDate = received_json_data['end_time']
 		startDate = received_json_data['start_time']
@@ -326,10 +329,7 @@ def update_ad_set_data(request):
 		longitude = float(longitude)
 		print(longitude)
 		
-		adsetIds = request.GET.get('adsetId')
-		adsetId=int(adsetIds)
-		print('>>>>>>TYPE',type(adsetId))
-		print('><><><>',adsetId)
+		adsetId = request.GET.get('adsetId')
 		targetings={'targeting': {'geo_locations':{'custom_locations':[  
 	        	{  
 	            "radius":30,
@@ -339,11 +339,9 @@ def update_ad_set_data(request):
 	        }
 		try:
 			scrapped_url = Adset.objects.get(id=adsetId)
-			print('>>>>>>',scrapped_url)
 		except Adset.DoesNotExist:
 			scrapped_url = Adset.objects.create(id=adsetId,start_time=startDate,end_time=endDate
 			,targeting=targetings)
-			print('<<<<<<<<<',scrapped_url)
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
 		app_id = '263805807945856'
 		ADSET_ID = adsetId
@@ -351,7 +349,7 @@ def update_ad_set_data(request):
 		fields = ['start_time','end_time','targeting']
 		print(fields)
 		params = {
-			'start_time':startDate,
+			# 'start_time':startDate,
 			'end_time':endDate,
 			'targeting': {'geo_locations':{'custom_locations':[  
 	        	{  
