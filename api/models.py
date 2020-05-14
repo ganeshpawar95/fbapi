@@ -8,7 +8,7 @@ class Post(models.Model):
 
 
 class Adset(models.Model):
-	id=models.IntegerField(primary_key=True)
+	id=models.BigIntegerField(primary_key=True)
 	start_time=models.DateTimeField()
 	end_time=models.DateTimeField()
 	targeting=JSONField(max_length=200)

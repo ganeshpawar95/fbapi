@@ -341,8 +341,8 @@ def update_ad_set_data(request):
 			scrapped_url = Adset.objects.get(id=adsetId)
 			print('>>>>>>',scrapped_url)
 		except Adset.DoesNotExist:
-			scrapped_url = Adset.objects.create(id=adsetId,start_time=str(startDate),end_time=str(endDate)
-			,targeting=str(targetings))
+			scrapped_url = Adset.objects.create(id=adsetId,start_time=startDate,end_time=endDate
+			,targeting=targetings)
 			print('<<<<<<<<<',scrapped_url)
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
 		app_id = '263805807945856'
