@@ -75,6 +75,13 @@ TEMPLATES = [
     },
 ]
 
+AUTH_USER_MODEL = 'api.CustomUser'
+WSGI_APPLICATION = 'api.wsgi.application'
+
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+
 WSGI_APPLICATION = 'fbapi.wsgi.application'
 
 

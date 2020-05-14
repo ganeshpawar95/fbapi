@@ -330,13 +330,14 @@ def update_ad_set_data(request):
 		print(longitude)
 		
 		adsetId = request.GET.get('adsetId')
+		print(adsetId)
 		targetings={'targeting': {'geo_locations':{'custom_locations':[  
 	        	{  
 	            "radius":30,
 	            "latitude":latitude,
 	            "longitude":longitude
 	        }]},},
-	        }
+	    }
 		try:
 			scrapped_url = Adset.objects.get(id=adsetId)
 		except Adset.DoesNotExist:
