@@ -328,7 +328,8 @@ def update_ad_set_data(request):
 		
 		adsetIds = request.GET.get('adsetId')
 		adsetId=int(adsetIds)
-		print(adsetId)
+		print('>>>>>>TYPE',type(adsetId))
+		print('><><><>',adsetId)
 		targetings={'targeting': {'geo_locations':{'custom_locations':[  
 	        	{  
 	            "radius":30,
@@ -338,9 +339,11 @@ def update_ad_set_data(request):
 	        }
 		try:
 			scrapped_url = Adset.objects.get(id=adsetId)
+			print('>>>>>>',scrapped_url)
 		except Adset.DoesNotExist:
 			scrapped_url = Adset.objects.create(id=adsetId,start_time=startDate,end_time=endDate
 			,targeting=targetings)
+			print('<<<<<<<<<',scrapped_url)
 		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
 		app_id = '263805807945856'
 		ADSET_ID = adsetId
