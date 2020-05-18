@@ -368,3 +368,28 @@ def update_ad_set_data(request):
 		return Response(updateadset)
 	else:
 		return HttpResponse('not found')
+
+
+
+@api_view(['GET'])
+def updated_adset(request):
+	if request.method=='GET':
+		access_token=request.headers['token']
+
+		adsetid = request.GET.get('adsetId')
+		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
+		app_id = '263805807945856'
+		ADSET_ID = adsetid
+		data1=[]
+		gets=Adset.objects.filter(id=adsetid)
+		for i in gets:
+			data={
+				'id':i.id,
+				'start_time':i.start_time,
+				'end_time':i.end_time,
+				'targeting':i.targeting,
+			}
+			data1.append(data)
+		return Response(data1)
+	else:
+		return HttpResponse('not found')
