@@ -344,9 +344,10 @@ def update_ad_set_data(request):
 		app_id = '263805807945856'
 		ADSET_ID = adsetId
 		FacebookAdsApi.init(access_token=access_token)
-		fields = ['end_time','targeting']
+		fields = ['start_time','end_time','targeting']
 		print(fields)
 		params = {
+			'start_time':startDate,
 			'end_time':endDate,
 			'targeting': {'geo_locations':{'custom_locations':[  
 	        	{  
