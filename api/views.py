@@ -128,6 +128,7 @@ def removebg(request):
 @api_view(['GET'])
 def getadset(request):
 	if request.method == 'GET':
+		print('----------------------------------')
 		access_token=request.headers['token']
 		campaignId = request.GET.get('campignId')
 
@@ -148,7 +149,7 @@ def getadset(request):
 	    	fields=fields,
 	    	params=params,
 	    	)
-		print(ads)
+		print('>>>>>>ads',ads)
 		for i in ads:
 			data={
 			'id':i['id'],
@@ -160,29 +161,33 @@ def getadset(request):
 			data1.append(data)
 
 		today = date.today()
+		print('>>??>today',today)
 		for i in data1:
+			print('><><><><',i)
 			idss=i['id']
 			end_time=i['end_time']
 			date1 = (parser.parse(end_time))
 			endate=date1.date()
 			if endate <= today:
 				adsts=Adset.objects.filter(id=idss)
+				print('>>><><><>',adsts)
 				for adsss in adsts:
 					targsts=adsss.targeting
 					fields = ['targeting','start_time','end_time']
 					params = {
 					'targeting':targsts,
 					}
+					print(">>>>>><<>",params)
 					updateadset= AdSet(idss).api_update(
 					fields=fields,
 					params=params,
 					)
 					print('update ad set',updateadset)
 			else:
-				print('date is greter then today date')		
+				print('>>>>date is greter then today date')		
 		return Response(data1)
 	else:
-		return HttpResponse('not found')
+		return HttpResponse('>>>not found')
 
 
 @api_view(['GET'])
