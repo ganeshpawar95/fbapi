@@ -128,7 +128,6 @@ def removebg(request):
 @api_view(['GET'])
 def getadset(request):
 	if request.method == 'GET':
-		print('----------------------------------')
 		access_token=request.headers['token']
 		campaignId = request.GET.get('campignId')
 
@@ -149,7 +148,7 @@ def getadset(request):
 	    	fields=fields,
 	    	params=params,
 	    	)
-		print('>>>>>>ads',ads)
+		print(ads)
 		for i in ads:
 			data={
 			'id':i['id'],
@@ -161,33 +160,29 @@ def getadset(request):
 			data1.append(data)
 
 		today = date.today()
-		print('>>??>today',today)
 		for i in data1:
-			print('><><><><',i)
 			idss=i['id']
 			end_time=i['end_time']
 			date1 = (parser.parse(end_time))
 			endate=date1.date()
 			if endate <= today:
 				adsts=Adset.objects.filter(id=idss)
-				print('>>><><><>',adsts)
 				for adsss in adsts:
 					targsts=adsss.targeting
 					fields = ['targeting','start_time','end_time']
 					params = {
 					'targeting':targsts,
 					}
-					print(">>>>>><<>",params)
 					updateadset= AdSet(idss).api_update(
 					fields=fields,
 					params=params,
 					)
 					print('update ad set',updateadset)
 			else:
-				print('>>>>date is greter then today date')		
+				print('date is greter then today date')		
 		return Response(data1)
 	else:
-		return HttpResponse('>>>not found')
+		return HttpResponse('not found')
 
 
 @api_view(['GET'])
@@ -318,9 +313,6 @@ def update_ad_set_data(request):
 		print('----------------------------------')
 		access_token=request.headers['token']
 		received_json_data = json.loads(request.body)
-		# received_json_data={"start_time":"2020-05-13T20:34:03.285+05:30","end_time":"2020-05-19T20:34:03.287+05:30","location":{"long":-84.3879824,"lati":33.7489954}}
-		# access_token='EAADv7hN46IABACK043D7oPKJPKAZBK92bRxZAbesb0FRzPX1BFRIgJ7zv2IFo6sH0hI8O1ZA8bha1yZCZAPvLy6biKkF9NwII1gZAZCXsT9BKPBzcPYAspiNvu6zxX6iJDBX6jJR87mYZCjZA5ZAgf5MDKTpEnKFO7cywmBXEjyZBSudJBJ4mNSNAQe0fUY9CinfMgZD'
-		
 
 		endDate = received_json_data['end_time']
 		startDate = received_json_data['start_time']
@@ -352,10 +344,9 @@ def update_ad_set_data(request):
 		app_id = '263805807945856'
 		ADSET_ID = adsetId
 		FacebookAdsApi.init(access_token=access_token)
-		fields = ['start_time','end_time','targeting']
+		fields = ['end_time','targeting']
 		print(fields)
 		params = {
-			# 'start_time':startDate,
 			'end_time':endDate,
 			'targeting': {'geo_locations':{'custom_locations':[  
 	        	{  
