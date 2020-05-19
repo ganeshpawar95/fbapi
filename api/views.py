@@ -136,19 +136,14 @@ def getadset(request):
 		id = 'act_2770121319724389'
 		CAMPAIGN_ID = campaignId
 		FacebookAdsApi.init(access_token=access_token)
-		fields = [
-	    'name',
-	    'start_time',
-	    'end_time',
-	    'targeting',
-	      ]
+		fields = ['name','start_time','end_time','targeting']
 		data1=[]
 		params = {}
 		ads= Campaign(CAMPAIGN_ID).get_ad_sets(
 	    	fields=fields,
 	    	params=params,
 	    	)
-		print(ads)
+		# print(ads)
 		for i in ads:
 			data={
 			'id':i['id'],
@@ -162,6 +157,7 @@ def getadset(request):
 		today = date.today()
 		for i in data1:
 			idss=i['id']
+			print(idss);
 			end_time=i['end_time']
 			date1 = (parser.parse(end_time))
 			endate=date1.date()
@@ -169,10 +165,10 @@ def getadset(request):
 				adsts=Adset.objects.filter(id=idss)
 				for adsss in adsts:
 					targsts=adsss.targeting
-					fields = ['targeting','start_time','end_time']
-					params = {
-					'targeting':targsts,
-					}
+					fields = ['targeting']
+					params = targsts
+					
+					print(params)
 					updateadset= AdSet(idss).api_update(
 					fields=fields,
 					params=params,
@@ -347,7 +343,7 @@ def update_ad_set_data(request):
 		fields = ['start_time','end_time','targeting']
 		print(fields)
 		params = {
-			'start_time':startDate,
+			# 'start_time':startDate,
 			'end_time':endDate,
 			'targeting': {'geo_locations':{'custom_locations':[  
 	        	{  
