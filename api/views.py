@@ -309,56 +309,55 @@ def update_ad_set_data(request):
 		print('----------------------------------')
 		access_token=request.headers['token']
 		received_json_data = json.loads(request.body)
-
-		endDate = received_json_data['end_time']
+        
+		end_time = received_json_data['end_time']
 		startDate = received_json_data['start_time']
 		print('-----------' + endDate)
 
-		latitude = received_json_data['location']['lati']
+		latitude = received_json_data['lati']
 		latitude = float(latitude)
 		print(latitude)
 
-		longitude = received_json_data['location']['long']
+		longitude = received_json_data['long']
 		longitude = float(longitude)
 		print(longitude)
 		
+
 		adsetId = request.GET.get('adsetId')
-		print(adsetId)
 		targetings={'targeting': {'geo_locations':{'custom_locations':[  
 	        	{  
 	            "radius":30,
 	            "latitude":latitude,
 	            "longitude":longitude
 	        }]},},
-	    }
+	        }
 		try:
-			scrapped_url = Adset.objects.get(id=adsetId)
+			scrapped_url =Adset.objects.filter(id=ADSET_ID).update(start_time=start_time,end_time=end_time,targeting=targetings)
 		except Adset.DoesNotExist:
-			scrapped_url = Adset.objects.create(id=adsetId,start_time=startDate,end_time=endDate
+			scrapped_url = Adset.objects.create(id=ADSET_ID,name=name,start_time=startDate,end_time=end_time
 			,targeting=targetings)
-		app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
-		app_id = '263805807945856'
-		ADSET_ID = adsetId
-		FacebookAdsApi.init(access_token=access_token)
-		fields = ['start_time','end_time','targeting']
-		print(fields)
-		params = {
-			# 'start_time':startDate,
-			'end_time':endDate,
-			'targeting': {'geo_locations':{'custom_locations':[  
-	        	{  
-	            "radius":30,
-	            "latitude":latitude,
-	            "longitude":longitude
-	        }]},},
-		}
-
-		updateadset= AdSet(ADSET_ID).api_update(
-				fields=fields,
-				params=params,
-				)
-		print(updateadset)
-		return Response(updateadset)
+		# app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
+		# app_id = '263805807945856'
+		# ADSET_ID = adsetId
+		# FacebookAdsApi.init(access_token=access_token)
+		# fields = ['start_time','end_time','targeting']
+		# print(fields)
+		# params = {
+		# 	'start_time':startDate,
+		# 	'end_time':endDate,
+		# 	'targeting': {'geo_locations':{'custom_locations':[  
+	 #        	{  
+	 #            "radius":30,
+	 #            "latitude":latitude,
+	 #            "longitude":longitude
+	 #        }]},},
+		# }
+		# updateadset= AdSet(ADSET_ID).api_update(
+		# 		fields=fields,
+		# 		params=params,
+		# 		)
+		# print(updateadset)
+		return Response('adset update set in database')
 	else:
 		return HttpResponse('not found')
 
