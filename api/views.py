@@ -22,6 +22,13 @@ import json
 # from datetime import datetime
 from datetime import date
 import dateutil.parser as parser
+import datetime
+from datetime import datetime
+
+import pytz
+
+utc = pytz.utc
+
 
 def campagin(request):
 	return render(request,'index.html')
@@ -145,6 +152,22 @@ def getadset(request):
 	    	)
 		# print(ads)
 		for i in ads:
+			orginalid=i['id']
+			start_time=i['start_time']
+			end_time=i['end_time']
+			targetings=i['targeting']
+			print(orginalid)
+			try:
+				print('---------------exit')
+				gets=AdsetOrignal.objects.get(id=orginalid)
+				if gets:
+					#updte data in database
+					AdsetOrignal.objects.filter(id=orginalid).update(start_time=start_time,end_time=end_time)
+				else:
+					print('not in db')
+			except AdsetOrignal.DoesNotExist:
+				AdsetOrignal.objects.create(id=orginalid,start_time=start_time,end_time=end_time,targeting=targetings)
+				print('---------------------not exit')
 			data={
 			'id':i['id'],
 			'name':i['name'],
@@ -153,29 +176,44 @@ def getadset(request):
 			'targeting':i['targeting'],
 			}
 			data1.append(data)
-
-		today = date.today()
+		today = datetime.now(tz=utc)
+		#end date then update adset orginal locations
+		print('----------------today',today)
 		for i in data1:
-			idss=i['id']
-			print(idss);
-			end_time=i['end_time']
-			date1 = (parser.parse(end_time))
-			endate=date1.date()
-			if endate <= today:
-				adsts=Adset.objects.filter(id=idss)
-				for adsss in adsts:
-					targsts=adsss.targeting
-					fields = ['targeting']
-					params = targsts
-					
-					print(params)
-					updateadset= AdSet(idss).api_update(
-					fields=fields,
-					params=params,
-					)
-					print('update ad set',updateadset)
-			else:
-				print('date is greter then today date')		
+		  ids=i['id']
+		  orignallocation= AdsetOrignal.objects.filter(id=ids)
+		  adsts=Adset.objects.filter(id=ids)
+		  for i in adsts:
+		  	end_times=i.end_time
+		  	print('end_times-----',end_times)
+		  	if end_times<= today:
+		  		for orignallo in orignallocation:
+		  			targeting=orignallo.targeting
+		  		fields = ['targeting']
+		  		params = {'targeting':targeting}
+		  		# print(params)
+		  		AdSet(ids).api_update(fields=fields,params=params,)
+		  		print('change orignal location adset',ids)
+		  	else:
+		  		print('end date is greter today date')
+		#end code enddate update addset location
+        # updte add set locaions usegin start date time
+		for i in data1:
+		  ids=i['id']
+		  adsts=Adset.objects.filter(id=ids)
+		  for i in adsts:
+		  	start_times=i.start_time
+		  	targeting=i.targeting
+		  	print('start_time-----',start_times)
+		  	if start_times <= today:
+		  		fields = ['targeting']
+		  		params = targeting
+		  		print(params)
+		  		AdSet(ids).api_update(fields=fields,params=params,)
+		  		print('updte  location adset',ids)
+		  	else:
+		  		print('start_time is greter today date')
+		#end code update adset        
 		return Response(data1)
 	else:
 		return HttpResponse('not found')
@@ -309,19 +347,15 @@ def update_ad_set_data(request):
 		print('----------------------------------')
 		access_token=request.headers['token']
 		received_json_data = json.loads(request.body)
-        
+
 		end_time = received_json_data['end_time']
-		startDate = received_json_data['start_time']
-		print('-----------' + endDate)
+		start_time = received_json_data['start_time']
 
 		latitude = received_json_data['lati']
 		latitude = float(latitude)
-		print(latitude)
 
 		longitude = received_json_data['long']
 		longitude = float(longitude)
-		print(longitude)
-		
 
 		adsetId = request.GET.get('adsetId')
 		targetings={'targeting': {'geo_locations':{'custom_locations':[  
@@ -332,35 +366,17 @@ def update_ad_set_data(request):
 	        }]},},
 	        }
 		try:
-			scrapped_url =Adset.objects.filter(id=ADSET_ID).update(start_time=start_time,end_time=end_time,targeting=targetings)
+			print('---------------exit')
+			gets=Adset.objects.get(id=adsetId)
+			if gets:
+				Adset.objects.filter(id=adsetId).update(start_time=start_time,end_time=end_time)
+			else:
+				print('not in db')
 		except Adset.DoesNotExist:
-			scrapped_url = Adset.objects.create(id=ADSET_ID,name=name,start_time=startDate,end_time=end_time
-			,targeting=targetings)
-		# app_secret = 'db4b3037cd105cfd23b6032aecd2c3ff'
-		# app_id = '263805807945856'
-		# ADSET_ID = adsetId
-		# FacebookAdsApi.init(access_token=access_token)
-		# fields = ['start_time','end_time','targeting']
-		# print(fields)
-		# params = {
-		# 	'start_time':startDate,
-		# 	'end_time':endDate,
-		# 	'targeting': {'geo_locations':{'custom_locations':[  
-	 #        	{  
-	 #            "radius":30,
-	 #            "latitude":latitude,
-	 #            "longitude":longitude
-	 #        }]},},
-		# }
-		# updateadset= AdSet(ADSET_ID).api_update(
-		# 		fields=fields,
-		# 		params=params,
-		# 		)
-		# print(updateadset)
+			scrapped_url = Adset.objects.create(id=adsetId,start_time=start_time,end_time=end_time,targeting=targetings)
 		return Response('adset update set in database')
 	else:
 		return HttpResponse('not found')
-
 
 
 @api_view(['GET'])

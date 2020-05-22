@@ -19,8 +19,6 @@ class CustomUser(AbstractUser):
 
     objects = CustomUserManager()
 
-    
-    
 
     def __str__(self):
         return self.email
@@ -35,3 +33,10 @@ class Adset(models.Model):
 	start_time=models.DateTimeField()
 	end_time=models.DateTimeField()
 	targeting=JSONField(max_length=200)
+
+
+class AdsetOrignal(models.Model):
+    id=models.BigIntegerField(primary_key=True)
+    start_time=models.DateTimeField()
+    end_time=models.DateTimeField()
+    targeting=JSONField(max_length=200)
