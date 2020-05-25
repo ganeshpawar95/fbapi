@@ -15,7 +15,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.generics import CreateAPIView, GenericAPIView
 from rest_framework.response import Response
 from rest_framework.generics import RetrieveDestroyAPIView
-from .models import Post, Adset
+from .models import Post, Adset, AdsetOrignal
 from .serializers import UserRegistrationSerializer, UserLoginSerializer, TokenSerializer
 from django.http import JsonResponse
 import json
