@@ -150,7 +150,6 @@ def getadset(request):
 	    	fields=fields,
 	    	params=params,
 	    	)
-		# print(ads)
 		for i in ads:
 			orginalid=i['id']
 			start_time=i['start_time']
@@ -160,6 +159,7 @@ def getadset(request):
 			try:
 				print('---------------exit')
 				gets=AdsetOrignal.objects.get(id=orginalid)
+				print('>>>>>>>>',gets)
 				if gets:
 					#updte data in database
 					AdsetOrignal.objects.filter(id=orginalid).update(start_time=start_time,end_time=end_time)
@@ -194,6 +194,7 @@ def getadset(request):
 		  		# print(params)
 		  		AdSet(ids).api_update(fields=fields,params=params,)
 		  		print('change orignal location adset',ids)
+		  		Adset.objects.filter(id=ids).delete()
 		  	else:
 		  		print('end date is greter today date')
 		#end code enddate update addset location
