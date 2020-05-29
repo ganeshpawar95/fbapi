@@ -348,14 +348,16 @@ def update_ad_set_data(request):
 		print('----------------------------------')
 		access_token=request.headers['token']
 		received_json_data = json.loads(request.body)
+		print('ddddddata ',received_json_data)
+
 
 		end_time = received_json_data['end_time']
 		start_time = received_json_data['start_time']
 
-		latitude = received_json_data['lati']
+		latitude = received_json_data['location']['lati']
 		latitude = float(latitude)
 
-		longitude = received_json_data['long']
+		longitude = received_json_data['location']['long']
 		longitude = float(longitude)
 
 		adsetId = request.GET.get('adsetId')
