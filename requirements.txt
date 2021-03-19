@@ -11,7 +11,7 @@ django-cors-headers==3.2.1
 django-jsonfield==1.4.0
 django-nose==1.4.6
 django-rest-auth==0.9.5
-djangorestframework==3.11.0
+djangorestframework==3.11.2
 facebook-business==6.0.3
 gunicorn==20.0.4
 idna==2.9
